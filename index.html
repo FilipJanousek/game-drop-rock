@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DropRock</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <div class="container">
+      <div class="widget">
+        <canvas id="next" width="150" height="120"></canvas>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="board-wrap" aria-label="DropRock game board">
+        <canvas id="game" width="300" height="600"></canvas>
+        <div id="overlay" class="overlay visible">
+          <div class="overlay-card">
+            <p id="overlayTitle" class="overlay-title">DropRock</p>
+            <p id="overlayText" class="overlay-text">Stiskni Start</p>
+          </div>
+        </div>
+      </div>
+      <div class="buttons">
+        <button id="startBtn" type="button">Start</button>
+        <button id="pauseBtn" type="button">Pauza</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="widget">
+        <div class="stats">
+          <div class="stat"><span>Úroveň</span><strong id="level">1</strong></div>
+          <div class="stat"><span>Řádky</span><strong id="lines">0</strong></div>
+          <div class="stat"><span>Skóre</span><strong id="score">0</strong></div>
+        </div>
+      </div>
+
+      <div class="widget">
+        <div class="controls">
+          <h2>Ovládání</h2>
+          <p><kbd>←</kbd> <kbd>→</kbd> pohyb</p>
+          <p><kbd>↓</kbd> rychlejší pád</p>
+          <p><kbd>↑</kbd> otočení</p>
+          <p><kbd>Space</kbd> okamžitý pád</p>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="service.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
