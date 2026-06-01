@@ -29,6 +29,15 @@ function getRandomShape(types, shapes, cols) {
   };
 }
 
+function getBomb() {
+  return {
+    type: "bomb",
+    matrix: [[1]],
+    x: Math.floor(cols / 2),
+    y: 0,
+  };
+}
+
 function getNextShapePreview(type, shapes) {
   return {
     type,

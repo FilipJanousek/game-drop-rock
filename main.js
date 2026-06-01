@@ -46,6 +46,15 @@ function initGame(animationId, rows, cols, types, shapes) {
   animationId = requestAnimationFrame(update);
 }
 
+function getHighestColumnHeight(board, col) {
+  for (let y = 0; y < board.length; y++) {
+    if (board[y][col]) {
+      return board.length - y;
+    }
+  }
+  return 0;
+}
+
 function update(time = 0) {
   if (!running) return;
 
@@ -90,12 +99,32 @@ function mergePiece() {
   });
 }
 
+// bomb piece clears a 3x3 area around it when it lands
+function clearBombArea() {
+  const bombX = activePiece.x;
+  const bombY = activePiece.y;
+
+  for (let y = bombY - 1; y <= bombY + 1; y++) {
+    for (let x = bombX - 1; x <= bombX + 1; x++) {
+      if (y >= 0 && y < ROWS && x >= 0 && x < COLS) {
+        board[y][x] = null;
+      }
+    }
+  }
+}
+
 function spawnPiece() {
   activePiece = nextPiece;
-  activePiece.x =
-    Math.floor(COLS / 2) - Math.ceil(activePiece.matrix[0].length / 2);
+  activePiece.x = Math.floor(COLS / 2) - Math.ceil(activePiece.matrix[0].length / 2);
   activePiece.y = getStartY(activePiece.type, SHAPES);
+
   nextPiece = getRandomShape(TYPES, SHAPES, COLS);
+  
+  if (nextPiece.type === "BOMB" && getHighestColumnHeight(board, activePiece.x) < 5) {
+    nextPiece = getRandomShape(TYPES.filter(type => type !== "BOMB"), SHAPES, COLS);
+  }
+
+
   drawNext();
 
   if (collide(activePiece, 0, 0, activePiece.matrix, COLS, ROWS, board)) {
@@ -109,8 +138,16 @@ function softDrop() {
   activePiece.y++;
   if (collide(activePiece, 0, 0, activePiece.matrix, COLS, ROWS, board)) {
     activePiece.y--;
+
+    updateStats();
     mergePiece();
     clearLines();
+
+    if (activePiece.type === "BOMB") {
+      clearBombArea();
+    }
+
+    
     spawnPiece();
   }
   dropCounter = 0;
@@ -128,6 +165,12 @@ function hardDrop() {
   score += distance * 2;
   mergePiece();
   clearLines();
+
+  if (activePiece.type === "BOMB") {
+      clearBombArea();
+  }
+
+  
   spawnPiece();
   updateStats();
   dropCounter = 0;

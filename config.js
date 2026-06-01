@@ -11,6 +11,7 @@ const COLORS = {
   D: DEFAULT_COLOR,
   E: DEFAULT_COLOR,
   F: DEFAULT_COLOR,
+  BOMB: "#ff0000",
 };
 
 const SHAPES_PREVIEW = {
@@ -56,6 +57,9 @@ const SHAPES_PREVIEW = {
     [0, 1, 1, 1, 0],
     [0, 0, 0, 0, 0],
   ],
+  BOMB: [
+    [1],
+  ],
 }
 
 const SHAPES = {
@@ -86,6 +90,9 @@ const SHAPES = {
     [0, 0, 1],
     [1, 1, 1],
     [0, 0, 0],
+  ],
+  BOMB: [
+    [1],
   ],
 };
 
